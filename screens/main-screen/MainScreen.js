@@ -10,10 +10,10 @@ import React, {useCallback} from 'react';
 const {width: screenWidth} = Dimensions.get('screen');
 const roundButtonWidth = screenWidth * 0.2;
 
-const Button = ({value, onPress}) => (
+const Button = ({value, onPress, style, textStyle}) => (
   <TouchableOpacity>
-    <View style={buttonStyles.container}>
-      <Text style={buttonStyles.text}>{value}</Text>
+    <View style={[buttonStyles.container, style]}>
+      <Text style={[buttonStyles.text, textStyle]}>{value}</Text>
     </View>
   </TouchableOpacity>
 );
@@ -24,12 +24,14 @@ const buttonStyles = StyleSheet.create({
     justifyContent: 'center',
     height: roundButtonWidth,
     width: roundButtonWidth,
-    borderRadius: 35,
-    flex: 1,
+    borderRadius: roundButtonWidth / 2,
+    backgroundColor: '#232429',
+    marginHorizontal: 5,
   },
   text: {
-    fontSize: 18,
-    fontWeight: '600',
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white',
   },
 });
 
@@ -60,15 +62,40 @@ export default function MainScreen() {
 
           <View style={styles.row}>
             <Button onPress={onButtonPress} value={0} />
-            <Button onPress={onButtonPress} value={'.'} />
+            <Button
+              onPress={onButtonPress}
+              value={'='}
+              style={{width: roundButtonWidth * 2}}
+              textStyle={styles.operatorText}
+            />
           </View>
         </View>
 
         <View style={styles.operatorSection}>
-          <Button onPress={onButtonPress} value={'÷'} />
-          <Button onPress={onButtonPress} value={'*'} />
-          <Button onPress={onButtonPress} value={'+'} />
-          <Button onPress={onButtonPress} value={'-'} />
+          <Button
+            style={styles.operatorItem}
+            textStyle={styles.operatorText}
+            onPress={onButtonPress}
+            value={'÷'}
+          />
+          <Button
+            style={styles.operatorItem}
+            textStyle={styles.operatorText}
+            onPress={onButtonPress}
+            value={'x'}
+          />
+          <Button
+            style={styles.operatorItem}
+            textStyle={styles.operatorText}
+            onPress={onButtonPress}
+            value={'+'}
+          />
+          <Button
+            style={styles.operatorItem}
+            textStyle={styles.operatorText}
+            onPress={onButtonPress}
+            value={'-'}
+          />
         </View>
       </View>
     </View>
@@ -78,7 +105,8 @@ export default function MainScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    paddingHorizontal: 16,
+    paddingTop: 16,
   },
   contentContainer: {
     flexDirection: 'row',
@@ -88,8 +116,17 @@ const styles = StyleSheet.create({
   },
   operatorSection: {
     flex: 1,
+    alignItems: 'center',
+  },
+  operatorItem: {
+    marginBottom: 15,
+    backgroundColor: '#ec9832',
+  },
+  operatorText: {
+    fontSize: 25,
   },
   row: {
+    marginBottom: 15,
     flexDirection: 'row',
   },
 });
